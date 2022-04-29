@@ -1,0 +1,50 @@
+{
+  "name": "lary-nextjs-multi-zones",
+  "productName": "MultiZonesDevWeb",
+  "version": "1.0.0",
+  "main": "./main/index.js",
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:a": "next dev ./A -p 6001",
+    "dev:b": "next dev ./B -p 6002",
+    "build:a": "next build A && next export A",
+    "build:b": "next build B && next export B",
+    "build:web": "yarn build:a && yarn build:b",
+    "start": "electron --inspect .",
+    "build-renderer": "yarn build:web",
+    "build-electron": "tsc -p electron-src",
+    "build": "yarn build-renderer && yarn build-electron",
+    "dist": "npm run build && electron-builder --dir",
+    "dist:alone": "electron-builder --dir",
+    "type-check": "tsc",
+    "dev:web": "node main/dev-web.js",
+    "start:web": "NODE_ENV=production node ./main/dev-web.js",
+    "clean": "rm -rf package-lock.json yarn.lock node_modules/ && npm install",
+    "postinstall": "npx next telemetry disable"
+  },
+  "extraResources": [
+    {
+      "from": "renderer/out",
+      "to": "app/renderer"
+    }
+  ],
+  "devDependencies": {
+    "@types/app-root-path": "1.2.4",
+    "@types/next": "9.0.0",
+    "@types/node": "17.0.30",
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.3",
+    "electron": "18.2.0",
+    "electron-builder": "23.0.3",
+    "next": "12.1.5",
+    "ts-node-dev": "1.1.8",
+    "typescript": "4.6.4"
+  },
+  "dependencies": {
+    "app-root-path": "3.0.0",
+    "electron-is-dev": "2.0.0",
+    "electron-next": "3.1.5",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  }
+}
